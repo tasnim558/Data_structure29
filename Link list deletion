@@ -1,0 +1,91 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+};
+
+// Create linked list
+Node* createList(int arr[], int n) {
+    Node *head = NULL, *temp = NULL, *newNode;
+
+    for (int i = 0; i < n; i++) {
+        newNode = new Node();
+        newNode->data = arr[i];
+        newNode->next = NULL;
+
+        if (head == NULL) {
+            head = newNode;
+            temp = newNode;
+        } else {
+            temp->next = newNode;
+            temp = newNode;
+        }
+    }
+    return head;
+}
+
+// Delete at position
+Node* deleteAtPosition(Node* head, int pos) {
+
+    if (head == NULL) {
+        cout << "List is empty!" << endl;
+        return head;
+    }
+
+    if (pos == 1) {
+        Node* temp = head;
+        head = head->next;
+        delete temp;
+        return head;
+    }
+
+    Node* temp = head;
+
+    for (int i = 1; i < pos - 1 && temp->next != NULL; i++) {
+        temp = temp->next;
+    }
+
+    if (temp->next == NULL) {
+        cout << "Invalid position!" << endl;
+        return head;
+    }
+
+    Node* delNode = temp->next;
+    temp->next = delNode->next;
+    delete delNode;
+
+    return head;
+}
+
+// Print list
+void printList(Node* head) {
+    Node* temp = head;
+
+    while (temp != NULL) {
+        cout << temp->data << " -> ";
+        temp = temp->next;
+    }
+
+    cout << "NULL" << endl;
+}
+
+// Main function
+int main() {
+    int arr[] = {10, 20, 30, 40};
+    int n = 4;
+
+    Node* head = createList(arr, n);
+
+    cout << "Initial list: ";
+    printList(head);
+
+    // Delete operation
+    head = deleteAtPosition(head, 3);
+
+    cout << "After deletion: ";
+    printList(head);
+
+    return 0;
+}
