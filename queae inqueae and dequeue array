@@ -1,1 +1,74 @@
+#include <iostream>
+using namespace std;
+
+#define MAX 5
+
+int queue[MAX];
+int front = -1;
+int rear = -1;
+
+// Enqueue
+void enqueue(int data)
+{
+    if (rear == MAX - 1)
+    {
+        cout << "Queue Overflow" << endl;
+        return;
+    }
+
+    if (front == -1)
+        front = 0;
+
+    rear++;
+    queue[rear] = data;
+}
+
+// Dequeue
+void dequeue()
+{
+    if (front == -1 || front > rear)
+    {
+        cout << "Queue Underflow" << endl;
+        return;
+    }
+
+    cout << queue[front] << " Dequeued Successfully" << endl;
+    front++;
+}
+
+// Display
+void display()
+{
+    if (front == -1 || front > rear)
+    {
+        cout << "Queue is Empty" << endl;
+        return;
+    }
+
+    cout << "Queue: ";
+    for (int i = front; i <= rear; i++)
+    {
+        cout << queue[i] << " ";
+    }
+    cout << endl;
+}
+
+int main()
+{
+    enqueue(10);
+    enqueue(20);
+    enqueue(30);
+
+    display();
+
+    cout << endl;
+
+    dequeue();
+
+    cout << endl;
+
+    display();
+
+    return 0;
+}
 
